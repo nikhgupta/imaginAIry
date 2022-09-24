@@ -243,9 +243,7 @@ def imagine(
                         mask_separator = prompt.mask_separator if prompt.mask_separator else 0.9
                         mask = np.array(mask_image)
                         mask = mask.astype(np.float32) / 255.0
-                        mask = np.tile(mask, (4, 1, 1))
-                        mask = mask[None].transpose(0, 1, 2, 3)
-                        # mask = mask[None, None]
+                        mask = mask[None, None]
                         mask[mask < mask_separator] = 0
                         mask[mask >= mask_separator] = 1
                         mask = torch.from_numpy(mask)
