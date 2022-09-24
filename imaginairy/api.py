@@ -236,14 +236,16 @@ def imagine(
                                 mask_image.width // downsampling_factor,
                                 mask_image.height // downsampling_factor,
                             ),
-                            resample=Image.Resampling.NEAREST,
+                            resample=Image.Resampling.LANCZOS,
                         )
                         log_img(mask_image, "init mask 2")
 
                         mask_separator = prompt.mask_separator if prompt.mask_separator else 0.9
                         mask = np.array(mask_image)
                         mask = mask.astype(np.float32) / 255.0
-                        mask = mask[None, None]
+                        mask = np.tile(mask, (4, 1, 1))
+                        mask = mask[None].transpose(0, 1, 2, 3)
+                        # mask = mask[None, None]
                         mask[mask < mask_separator] = 0
                         mask[mask >= mask_separator] = 1
                         mask = torch.from_numpy(mask)
