@@ -95,6 +95,7 @@ class ImaginePrompt:
         mask_image=None,
         mask_mode=MaskMode.REPLACE,
         mask_expansion=2,
+        mask_separator=0.9,
         seed=None,
         steps=50,
         height=512,
@@ -135,6 +136,7 @@ class ImaginePrompt:
         self.mask_image = mask_image
         self.mask_mode = mask_mode
         self.mask_expansion = mask_expansion
+        self.mask_separator = mask_separator
         self.tile_mode = tile_mode
 
     @property

@@ -1,0 +1,6 @@
+{
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.logLevel": "Warning",
+  "python.analysis.stubPath": "schema.py",
+  "python.analysis.typeCheckingMode": "off"
+}

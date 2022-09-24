@@ -92,7 +92,9 @@ def imagine_image_files(
     record_step_images=False,
     output_file_extension="jpg",
     print_caption=False,
+    quiet=False
 ):
+    logger.setLevel(logging.WARN if quiet else logging.INFO)
     big_path = os.path.join(outdir, "upscaled")
     os.makedirs(outdir, exist_ok=True)
 
@@ -238,11 +240,12 @@ def imagine(
                         )
                         log_img(mask_image, "init mask 2")
 
+                        mask_separator = prompt.mask_separator if prompt.mask_separator else 0.9
                         mask = np.array(mask_image)
                         mask = mask.astype(np.float32) / 255.0
                         mask = mask[None, None]
-                        mask[mask < 0.9] = 0
-                        mask[mask >= 0.9] = 1
+                        mask[mask < mask_separator] = 0
+                        mask[mask >= mask_separator] = 1
                         mask = torch.from_numpy(mask)
                         mask = mask.to(get_device())
 
